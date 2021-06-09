@@ -14,11 +14,14 @@
     "@angular/common": "~12.0.3",
     "@angular/compiler": "~12.0.3",
     "@angular/core": "~12.0.3",
+    "@angular/fire": "^6.1.5",
     "@angular/forms": "~12.0.3",
     "@angular/platform-browser": "~12.0.3",
     "@angular/platform-browser-dynamic": "~12.0.3",
     "@angular/router": "~12.0.3",
+    "angular2-flash-messages": "^3.0.1",
     "bootstrap": "^5.0.1",
+    "firebase": "^8.6.5",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
@@ -26,7 +29,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.0.3",
+    "@angular-devkit/build-angular": "^0.901.15",
     "@angular/cli": "~12.0.3",
     "@angular/compiler-cli": "~12.0.3",
     "@types/jasmine": "~3.6.0",
