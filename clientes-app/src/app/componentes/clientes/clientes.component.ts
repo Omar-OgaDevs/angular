@@ -1,7 +1,6 @@
-import { ClienteServicio } from './../../servicios/cliente.service';
 import { Component, OnInit } from '@angular/core';
+import { ClienteServicio } from 'src/app/servicios/cliente.service';
 import { Cliente } from 'src/app/modelo/cliente.model';
-
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -11,13 +10,22 @@ export class ClientesComponent implements OnInit {
 
   clientes: Cliente[] | undefined;
 
-  constructor(private clienteServicio: ClienteServicio) { }
+  constructor(private clientesServicio: ClienteServicio) { }
 
   ngOnInit(): void {
-    this.clienteServicio.getClientes().subscribe(
+    this.clientesServicio.getClientes().subscribe(
       clientes => {
         this.clientes = clientes;
       }
     )
+  }
+  getSaldoTotal() {
+    let saldoTotal: number = 0;
+    if (this.clientes) {
+      this.clientes.forEach(cliente => {
+        saldoTotal += cliente.saldo;
+      })
+    }
+    return saldoTotal;
   }
 }
