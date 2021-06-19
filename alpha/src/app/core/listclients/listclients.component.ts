@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from 'src/app/modelo/cliente.model';
+import { Cliente } from '../../modelo/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
@@ -20,4 +20,15 @@ export class ListclientsComponent implements OnInit {
       }
     )
   }
+
+//  getSaldoTotal(){
+//    let saldoTotal: number = 0;
+//
+//    if(this.clientes){
+//      this.clientes.forEach(cliente =>{
+//        saldoTotal += cliente.saldo;
+//      })
+//    }
+//    return saldoTotal;
+//  }
 }
