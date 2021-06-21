@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Cliente } from '../modelo/cliente.model';
 import { map } from 'rxjs/operators';
+import { Cliente } from '../modelo/cliente.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  clientesColeccion: AngularFirestoreCollection<Cliente>;
+  clientesColeccion!: AngularFirestoreCollection<Cliente>;
   clienteDoc!: AngularFirestoreDocument<Cliente>;
   clientes!: Observable<Cliente[]>;
   cliente!: Observable<Cliente>;
@@ -32,6 +32,33 @@ export class ClienteService {
   }
   agregarCliente(cliente: Cliente){
     this.clientesColeccion.add(cliente);
+  }
+
+  getCliente(id: string){
+    this.clienteDoc = this.db.doc<Cliente>(`clientes/${id}`);
+    this.clienteDoc.snapshotChanges().pipe(
+      map( accion => {
+        if(accion.payload.exists === false){
+          return null;
+        }
+        else{
+          const datos = accion.payload.data() as Cliente;
+          datos.id = accion.payload.id;
+          return datos;
+        }
+      })
+    );
+    return this.cliente;
+  }
+
+  modificarCliente(cliente: Cliente){
+    this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
+    this.clienteDoc.update(cliente);
+  }
+
+  eliminarCliente(cliente: Cliente){
+    this.clienteDoc = this.db.doc(`clientes/${cliente.id}`);
+    this.clienteDoc.delete();
   }
 
 }

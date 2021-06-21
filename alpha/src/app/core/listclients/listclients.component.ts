@@ -13,9 +13,9 @@ export class ListclientsComponent implements OnInit {
 
   clientes: Cliente[] = [];
   cliente: Cliente = {
-    nombre:'',
-    apellido:'',
-    email:'',
+    nombre: '',
+    apellido: '',
+    email: '',
     saldo: 0
   }
 
@@ -23,8 +23,8 @@ export class ListclientsComponent implements OnInit {
   @ViewChild("botonCerrar") botonCerrar: ElementRef | undefined;
 
   constructor(private clientesServicio: ClienteService,
-              private flashMessages: FlashMessagesService
-    ) { }
+    private flashMessages: FlashMessagesService
+  ) { }
 
   ngOnInit(): void {
     this.clientesServicio.getClientes().subscribe(
@@ -35,7 +35,7 @@ export class ListclientsComponent implements OnInit {
   }
   /*
   getSaldoTotal(){
-    let saldoTotal: number = 0;
+    let saldoTotal: number | undefined;
 
     if(this.clientes){
       this.clientes.forEach(cliente =>{
@@ -45,21 +45,21 @@ export class ListclientsComponent implements OnInit {
     return saldoTotal;
   }
   */
- agregar({value, valid}: NgForm){
-   if(!valid){
-     this.flashMessages.show('Por favor llena el formulario correctamente',{
-       cssClass: 'alert-danger', timeout: 3000
-     });
-   }
-   else{
-     //Agregar el nuevo cliente
-     this.clientesServicio.agregarCliente(value);
-     this.clienteForm?.resetForm();
-     this.cerrarModal();
-   }
- }
- private cerrarModal(){
-   this.botonCerrar?.nativeElement.click();
- }
+  agregar({ value, valid }: NgForm) {
+    if (!valid) {
+      this.flashMessages.show('Por favor llena el formulario correctamente', {
+        cssClass: 'alert-danger', timeout: 3000
+      });
+    }
+    else {
+      //Agregar el nuevo cliente
+      this.clientesServicio.agregarCliente(value);
+      this.clienteForm?.resetForm();
+      this.cerrarModal();
+    }
+  }
+  private cerrarModal() {
+    this.botonCerrar?.nativeElement.click();
+  }
 
 }
