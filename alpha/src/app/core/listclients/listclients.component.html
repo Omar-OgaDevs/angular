@@ -30,7 +30,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let cliente of clientes; let i = index">
+              <tr *ngFor="let cliente of clientes; index as i">
                 <td>{{i+1}}</td>
                 <td>{{cliente.nombre}} {{cliente.apellido}}</td>
                 <td>{{cliente.saldo | currency: 'MXN': '$'}}</td>
@@ -75,32 +75,91 @@
     <div class="modal-content">
       <div class="modal-header bg-info text-white">
         <h5 class="modal-title">Agregar Cliente</h5>
-        <button class="close" data-bs-dismiss="modal">
+        <button class="close" data-bs-dismiss="modal" #botonCerrar>
           <span>&times;</span>
         </button>
       </div>
 
-      <form>
-        <div class="modal-body">
+      <flash-messages></flash-messages>
 
+      <form #clienteForm="ngForm" (ngSubmit)="agregar(clienteForm)">
+        <div class="modal-body">
           <div class="form-group">
             <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" class="form-control">
+            <input
+            type="text"
+            name="nombre"
+            class="form-control"
+            #nombre="ngModel"
+            [(ngModel)]="cliente.nombre"
+            [ngClass]="{'is-invalid': nombre.errors && nombre.touched}"
+            required
+            minlength="2">
+            <div [hidden]="!nombre.errors?.required" class="invalid-feedback">
+              Nombre Requerido
+            </div>
+
+            <div [hidden]="!nombre.errors?.minlength" class="invalid-feedback">
+              Debe contener al menos 2 caracteres
+            </div>
+
           </div>
 
           <div class="form-group">
             <label for="apellido">Apellido:</label>
-            <input type="text" name="apellido" class="form-control">
+            <input
+            type="text"
+            name="apellido"
+            class="form-control"
+            #apellido="ngModel"
+            [(ngModel)]="cliente.apellido"
+            [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
+            required
+            minlength="2">
+            <div [hidden]="!apellido.errors?.required" class="invalid-feedback">
+              Apellido Requerido
+            </div>
+
+            <div [hidden]="!apellido.errors?.minlength" class="invalid-feedback">
+              Debe contener al menos 2 caracteres
+            </div>
+
           </div>
 
           <div class="form-group">
             <label for="email">e-mail:</label>
-            <input type="email" name="email" class="form-control">
+            <input
+            type="email"
+            name="email"
+            class="form-control"
+            #email="ngModel"
+            [(ngModel)]="cliente.email"
+            [ngClass]="{'is-invalid': email.errors && email.touched}"
+            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            required>
+            <div [hidden]="!email.errors?.required" class="invalid-feedback">
+              E-mail Requerido
+            </div>
+
+            <div [hidden]="!email.errors?.pattern" class="invalid-feedback">
+              E-mail no es valido
+            </div>
           </div>
 
           <div class="form-group">
             <label for="saldo">Saldo:</label>
-            <input type="number" name="saldo" class="form-control">
+            <input
+            type="number"
+            name="saldo"
+            class="form-control"
+            #saldo="ngModel"
+            [(ngModel)]="cliente.saldo"
+            [ngClass]="{'is-invalid': saldo.errors && saldo.touched}"
+            required>
+            <div [hidden]="!saldo.errors?.required" class="invalid-feedback">
+              Saldo Requerido
+            </div>
+
           </div>
         </div>
 
