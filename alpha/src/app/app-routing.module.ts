@@ -6,13 +6,14 @@ import { LoginComponent } from './core/login/login.component';
 import { MainComponent } from './core/main/main.component';
 import { NotfoundComponent } from './core/notfound/notfound.component';
 import { RegisterComponent } from './core/register/register.component';
+import { AuthGuard } from './guardianes/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: MainComponent},
+  {path: '', component: MainComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'configuration', component: ConfigurationComponent},
-  {path: 'listclients/edit/:id', component: EditComponent},
+  {path: 'configuration', component: ConfigurationComponent, canActivate:[AuthGuard]},
+  {path: 'listclients/edit/:id', component: EditComponent, canActivate:[AuthGuard]},
   {path: '**', component: NotfoundComponent},
 ];
 

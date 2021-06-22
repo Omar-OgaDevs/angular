@@ -12,6 +12,7 @@ export class ClienteService {
   clienteDoc!: AngularFirestoreDocument<Cliente>;
   clientes!: Observable<Cliente[]>;
   cliente!: Observable<Cliente>;
+  forEach: any;
 
   constructor(private db: AngularFirestore){
     this.clientesColeccion = db.collection('clientes', ref => ref.orderBy('nombre','asc'));
