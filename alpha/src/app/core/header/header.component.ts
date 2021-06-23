@@ -1,3 +1,4 @@
+import { ConfigurationService } from 'src/app/services/configuracion.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
@@ -11,10 +12,13 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn!: boolean;
   loggedInUser!: string;
+  permitirRegistro!: boolean;
+  configuracion: any;
 
   constructor(
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private configuracionService: ConfigurationService
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +31,10 @@ export class HeaderComponent implements OnInit {
         this.isLoggedIn = false;
       }
     });
+
+    this.configuracionService.getConfiguracion().subscribe( configuracion => {
+      this.permitirRegistro = this.configuracion.permitirRegistro;
+    })
   }
   logout(){
     this.loginService.logout();

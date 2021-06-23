@@ -21,6 +21,7 @@ import { FooterComponent } from './core/footer/footer.component';
 import { ClienteService } from './services/cliente.service';
 import { LoginService } from './services/login.service';
 import { AuthGuard } from './guardianes/auth.guard';
+import { ConfigurationService } from './services/configuracion.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,13 @@ import { AuthGuard } from './guardianes/auth.guard';
     FormsModule,
     FlashMessagesModule.forRoot()
   ],
-  providers: [ClienteService, LoginService, AuthGuard],
+  providers: [
+    ClienteService,
+    LoginService,
+    AuthGuard,
+    ConfigurationService,
+    {provide: SETTINGS, useValue:{}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
