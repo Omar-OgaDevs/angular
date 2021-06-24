@@ -19,8 +19,8 @@ export class ConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurationService.getConfiguracion().subscribe(
-      (configuracion: Configuracion) => {
-        this.permitirRegistro = configuracion.permitirRegistro;
+      (configuracion: Configuracion | undefined) => {
+        this.permitirRegistro = configuracion?configuracion.permitirRegistro:true;
       }
     )
   }

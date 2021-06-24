@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn!: boolean;
   loggedInUser!: string;
-  permitirRegistro!: boolean;
+  permitirRegistro?: boolean = true;
   configuracion: any;
 
   constructor(
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
     });
 
     this.configuracionService.getConfiguracion().subscribe( configuracion => {
-      this.permitirRegistro = this.configuracion.permitirRegistro;
+      this.permitirRegistro = configuracion?configuracion.permitirRegistro:true;
     })
   }
   logout(){

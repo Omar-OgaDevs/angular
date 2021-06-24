@@ -8,17 +8,17 @@ import { Cliente } from '../modelo/cliente.model';
   providedIn: 'root'
 })
 export class ClienteService {
-  clientesColeccion!: AngularFirestoreCollection<Cliente>;
+  clientesColeccion: AngularFirestoreCollection<Cliente>;
   clienteDoc!: AngularFirestoreDocument<Cliente>;
   clientes!: Observable<Cliente[]>;
   cliente!: Observable<Cliente>;
-  forEach: any;
+  forEach!: any;
 
   constructor(private db: AngularFirestore){
     this.clientesColeccion = db.collection('clientes', ref => ref.orderBy('nombre','asc'));
   }
 
-  getClientes(): Observable<Cliente[]>{
+  getClientes(): Observable<Cliente[] | undefined>{
     //Obtener los clientes
     this.clientes = this.clientesColeccion.snapshotChanges().pipe(
       map( cambios => {
@@ -35,16 +35,16 @@ export class ClienteService {
     this.clientesColeccion.add(cliente);
   }
 
-  getCliente(id: string){
+  getCliente(id: string ){
     this.clienteDoc = this.db.doc<Cliente>(`clientes/${id}`);
-    this.clienteDoc.snapshotChanges().pipe(
+    this.cliente = this.clienteDoc.snapshotChanges().pipe(
       map( accion => {
         if(accion.payload.exists === false){
           return null;
         }
         else{
           const datos = accion.payload.data() as Cliente;
-          datos.id = accion.payload.id;
+          datos!.id = accion.payload.id;
           return datos;
         }
       })

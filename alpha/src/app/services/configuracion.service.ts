@@ -8,16 +8,16 @@ import { Configuracion } from '../modelo/configuracion.model';
 })
 export class ConfigurationService {
   configuracionDoc!: AngularFirestoreDocument<Configuracion>;
-  configuracion!: Observable<Configuracion>;
+  configuracion!: Observable<Configuracion | undefined>;
 
   // id unico de la colección de configuracion
   id = '1';
 
   constructor(private db: AngularFirestore) { }
 
-  getConfiguracion(): Observable<Configuracion>{
+  getConfiguracion(): Observable<Configuracion | undefined>{
     this.configuracionDoc = this.db.doc<Configuracion>(`configuracion/${this.id}`);
-    this.configuracionDoc.valueChanges();
+    this.configuracion = this.configuracionDoc.valueChanges();
     return this.configuracion;
   }
 
